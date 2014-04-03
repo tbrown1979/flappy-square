@@ -6,3 +6,9 @@ body {
 a {
   color: #00B7FF;
 }
+
+#game_div {
+    width: 400px;
+    margin: auto;
+    margin-top: 50px;
+}

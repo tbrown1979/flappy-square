@@ -1,5 +1,9 @@
-extends layout
-
-block content
-  h1= title
-  p Welcome to #{title}
+doctype
+html
+  head
+    meta(charset='utf-8')
+    title Flappy Bird Clone
+    script(type='text/javascript', src='javascripts/phaser.min.js')
+    script(type='text/javascript', src='javascripts/main.js')
+  body
+    div#game_div  

@@ -13,6 +13,9 @@ var main_state = {
       // Load the bird sprite
       this.game.load.image('bird', 'assets/bird.png'); 
 
+      // Load the pipe
+      this.game.load.image('pipe', 'assets/pipe.png');  
+
     },
 
     create: function() { 
@@ -28,6 +31,18 @@ var main_state = {
       var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
       space_key.onDown.add(this.jump, this);    
 
+      // Create a group of pipes
+      this.pipes = game.add.group();  
+      this.pipes.createMultiple(20, 'pipe');  
+
+      //create row of pipes ever 1.5 seconds
+      this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);
+
+      //add a score to top left
+      this.score = 0;  
+      var style = { font: "30px Arial", fill: "#ffffff" };  
+      this.label_score = this.game.add.text(20, 20, "0", style);   
+
     },
     
     update: function() {
@@ -37,6 +52,9 @@ var main_state = {
       // call the 'restart_game' function
       if (this.bird.inWorld == false)
         this.restart_game();
+
+      //bird collides with pipe, reset the game
+      this.game.physics.overlap(this.bird, this.pipes, this.restart_game, null, this);
     },
 
     // Make the bird jump 
@@ -47,9 +65,38 @@ var main_state = {
 
     // Restart the game
     restart_game: function() {  
-        // Start the 'main' state, which restarts the game
-        this.game.state.start('main');
+      //remove the timer that is adding rows of pipes
+      this.game.time.events.remove(this.timer);
+
+      // Start the 'main' state, which restarts the game
+      this.game.state.start('main');
     },
+
+    add_one_pipe: function(x, y) {  
+      // Get the first dead pipe of our group
+      var pipe = this.pipes.getFirstDead();
+
+      // Set the new position of the pipe
+      pipe.reset(x, y);
+
+      // Add velocity to the pipe to make it move left
+      pipe.body.velocity.x = -200; 
+
+      // Kill the pipe when it's no longer visible 
+      pipe.outOfBoundsKill = true;
+    },
+
+    add_row_of_pipes: function() {  
+      var hole = Math.floor(Math.random()*5)+1;
+
+      for (var i = 0; i < 8; i++)
+          if (i != hole && i != hole +1) 
+              this.add_one_pipe(400, i*60+10);   
+      //add 1 to score
+      this.score += 1;  
+      this.label_score.content = this.score;  
+    },
+
 };
 
 // Add and start the 'main' state to start the game

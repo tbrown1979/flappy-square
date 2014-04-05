@@ -6,8 +6,8 @@ This is just a flappy bird clone at the moment. Just following a tutorial to lea
 
 To get this up and running:
 
-> Download node.js
-> Download express.js
-> clone this repository
-> cd into the repository and type 'node app'
-> open a browser and go to: http://localhost:3000
+    Download node.js
+    Download express.js
+    clone this repository
+    cd into the repository and type 'node app'
+    open a browser and go to: http://localhost:3000

@@ -29,7 +29,7 @@ var main_state = {
 
       //add a score to top left
       this.score = this.pipeManager.score;
-      var style = { font: "30px Arial", fill: "#ffffff" };  
+      var style = { font: "30px Helvetica", fill: "#ffffff" };  
       this.label_score = this.game.add.text(20, 20, "0", style);
       this.label_score.content = this.score;
     },
